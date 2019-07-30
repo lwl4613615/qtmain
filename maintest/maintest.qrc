@@ -19,4 +19,7 @@
         <file alias="hips">Resources/images/ToolButtons/tiJian.png</file>
         <file>Resources/images/ToolButtons/xiTong.png</file>
     </qresource>
+    <qresource prefix="/Background">
+        <file alias="main">Resources/images/BackGround/timg.jpg</file>
+    </qresource>
 </RCC>

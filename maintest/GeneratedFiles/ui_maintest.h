@@ -77,6 +77,7 @@ public:
         font.setBold(true);
         font.setWeight(75);
         m_nWindowsTitle->setFont(font);
+        m_nWindowsTitle->setStyleSheet(QString::fromUtf8("color:rgb(255, 0, 127)"));
 
         horizontalLayout->addWidget(m_nWindowsTitle);
 

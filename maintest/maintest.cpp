@@ -4,7 +4,9 @@
 maintest::maintest(QWidget *parent)
 	: QMainWindow(parent)
 {
+	
 	ui.setupUi(this);
+	setFixedSize(1024, 768);
 	setWindowFlags(Qt::FramelessWindowHint);
 	ui.m_btnMenu->setBtnBackground(QStringLiteral(":/SysButtons/menu"));   // 设置按钮的背景图片，下同
 	ui.m_btnMenu->setToolTip(QStringLiteral("Settings"));                  // 设置文本提示，下同
@@ -18,4 +20,13 @@ maintest::maintest(QWidget *parent)
 	ui.m_btntest1->setIconSize(QPixmap(":/ToolButtons/test1").size());
 	ui.m_btntest2->setIcon(QPixmap(":/ToolButtons/test2"));
 	ui.m_btntest2->setIconSize(QPixmap(":/ToolButtons/test2").size());
+}
+
+void maintest::paintEvent(QPaintEvent* event)
+{
+
+	QPainter painter(this);
+	painter.setPen(Qt::NoPen);
+	painter.setBrush(Qt::white);
+	painter.drawPixmap(0, 0, width(), height(), QPixmap(":/Background/main"));  // 设置主窗体的背景图片
 }

@@ -9,7 +9,8 @@ class maintest : public QMainWindow
 
 public:
 	maintest(QWidget *parent = Q_NULLPTR);
-
+protected:
+	void paintEvent(QPaintEvent* event);
 private:
 	Ui::maintestClass ui;
 };
