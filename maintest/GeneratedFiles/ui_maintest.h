@@ -159,6 +159,7 @@ public:
         maintestClass->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(maintestClass);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
+        statusBar->setStyleSheet(QString::fromUtf8("color:rgb(240, 255, 250)"));
         maintestClass->setStatusBar(statusBar);
 
         retranslateUi(maintestClass);

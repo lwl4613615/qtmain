@@ -20,6 +20,8 @@ maintest::maintest(QWidget *parent)
 	ui.m_btntest1->setIconSize(QPixmap(":/ToolButtons/test1").size());
 	ui.m_btntest2->setIcon(QPixmap(":/ToolButtons/test2"));
 	ui.m_btntest2->setIconSize(QPixmap(":/ToolButtons/test2").size());
+	QLabel* statustext = new QLabel("lwl's gift", this);
+	statusBar()->addPermanentWidget(statustext);
 }
 
 void maintest::paintEvent(QPaintEvent* event)
