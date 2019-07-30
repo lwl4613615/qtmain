@@ -22,6 +22,24 @@ maintest::maintest(QWidget *parent)
 	ui.m_btntest2->setIconSize(QPixmap(":/ToolButtons/test2").size());
 	QLabel* statustext = new QLabel("lwl's gift", this);
 	statusBar()->addPermanentWidget(statustext);
+    //切换页面
+    connect(ui.m_btnhips, &QToolButton::clicked, this, [=] {
+        ui.MainStackWidget->setCurrentIndex(0);
+    });
+    connect(ui.m_btntest1, &QToolButton::clicked, this, [=] {
+        ui.MainStackWidget->setCurrentIndex(1);
+    });
+    connect(ui.m_btntest2, &QToolButton::clicked, this, [=] {
+        ui.MainStackWidget->setCurrentIndex(2);
+    });
+    connect(ui.m_btnFileFilter, &QPushButton::clicked, this, [=]
+    {
+        ui.HipsStackWindow->setCurrentIndex(0);
+    });
+    connect(ui.m_btnNetFilter, &QPushButton::clicked, this, [=]
+    {
+        ui.HipsStackWindow->setCurrentIndex(1);
+    });
 }
 
 void maintest::paintEvent(QPaintEvent* event)

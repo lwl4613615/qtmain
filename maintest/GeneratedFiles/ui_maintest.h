@@ -13,9 +13,12 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
@@ -42,17 +45,35 @@ public:
     QToolButton *m_btntest1;
     QToolButton *m_btntest2;
     QSpacerItem *horizontalSpacer;
-    QStackedWidget *stackedWidget;
-    QWidget *page;
-    QWidget *page_2;
-    QWidget *page_3;
+    QStackedWidget *MainStackWidget;
+    QWidget *FilterWidget;
+    QHBoxLayout *horizontalLayout_3;
+    QGroupBox *groupBox;
+    QVBoxLayout *verticalLayout_2;
+    QPushButton *m_btnFileFilter;
+    QPushButton *m_btnNetFilter;
+    QStackedWidget *HipsStackWindow;
+    QWidget *FileFilter;
+    QVBoxLayout *verticalLayout_3;
+    QWidget *widget_2;
+    QHBoxLayout *horizontalLayout_4;
+    QPushButton *m_btnStartFileFilter;
+    QPushButton *m_AddFolderPath;
+    QPushButton *m_btnRemoveFolderPath;
+    QPushButton *m_btnStopFileFilter;
+    QListView *m_FolderTable;
+    QWidget *NetFilter;
+    QWidget *test1;
+    QLabel *label_2;
+    QWidget *test2;
+    QLabel *label_3;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *maintestClass)
     {
         if (maintestClass->objectName().isEmpty())
             maintestClass->setObjectName(QString::fromUtf8("maintestClass"));
-        maintestClass->resize(703, 543);
+        maintestClass->resize(711, 543);
         centralWidget = new QWidget(maintestClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -142,19 +163,100 @@ public:
 
         verticalLayout->addWidget(widget);
 
-        stackedWidget = new QStackedWidget(centralWidget);
-        stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
-        page = new QWidget();
-        page->setObjectName(QString::fromUtf8("page"));
-        stackedWidget->addWidget(page);
-        page_2 = new QWidget();
-        page_2->setObjectName(QString::fromUtf8("page_2"));
-        stackedWidget->addWidget(page_2);
-        page_3 = new QWidget();
-        page_3->setObjectName(QString::fromUtf8("page_3"));
-        stackedWidget->addWidget(page_3);
+        MainStackWidget = new QStackedWidget(centralWidget);
+        MainStackWidget->setObjectName(QString::fromUtf8("MainStackWidget"));
+        FilterWidget = new QWidget();
+        FilterWidget->setObjectName(QString::fromUtf8("FilterWidget"));
+        horizontalLayout_3 = new QHBoxLayout(FilterWidget);
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        groupBox = new QGroupBox(FilterWidget);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setStyleSheet(QString::fromUtf8("color:rgb(248, 220, 255)"));
+        verticalLayout_2 = new QVBoxLayout(groupBox);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        m_btnFileFilter = new QPushButton(groupBox);
+        m_btnFileFilter->setObjectName(QString::fromUtf8("m_btnFileFilter"));
+        m_btnFileFilter->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);"));
 
-        verticalLayout->addWidget(stackedWidget);
+        verticalLayout_2->addWidget(m_btnFileFilter);
+
+        m_btnNetFilter = new QPushButton(groupBox);
+        m_btnNetFilter->setObjectName(QString::fromUtf8("m_btnNetFilter"));
+        m_btnNetFilter->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);"));
+
+        verticalLayout_2->addWidget(m_btnNetFilter);
+
+
+        horizontalLayout_3->addWidget(groupBox);
+
+        HipsStackWindow = new QStackedWidget(FilterWidget);
+        HipsStackWindow->setObjectName(QString::fromUtf8("HipsStackWindow"));
+        FileFilter = new QWidget();
+        FileFilter->setObjectName(QString::fromUtf8("FileFilter"));
+        verticalLayout_3 = new QVBoxLayout(FileFilter);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        widget_2 = new QWidget(FileFilter);
+        widget_2->setObjectName(QString::fromUtf8("widget_2"));
+        horizontalLayout_4 = new QHBoxLayout(widget_2);
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        m_btnStartFileFilter = new QPushButton(widget_2);
+        m_btnStartFileFilter->setObjectName(QString::fromUtf8("m_btnStartFileFilter"));
+
+        horizontalLayout_4->addWidget(m_btnStartFileFilter);
+
+        m_AddFolderPath = new QPushButton(widget_2);
+        m_AddFolderPath->setObjectName(QString::fromUtf8("m_AddFolderPath"));
+
+        horizontalLayout_4->addWidget(m_AddFolderPath);
+
+        m_btnRemoveFolderPath = new QPushButton(widget_2);
+        m_btnRemoveFolderPath->setObjectName(QString::fromUtf8("m_btnRemoveFolderPath"));
+
+        horizontalLayout_4->addWidget(m_btnRemoveFolderPath);
+
+        m_btnStopFileFilter = new QPushButton(widget_2);
+        m_btnStopFileFilter->setObjectName(QString::fromUtf8("m_btnStopFileFilter"));
+
+        horizontalLayout_4->addWidget(m_btnStopFileFilter);
+
+
+        verticalLayout_3->addWidget(widget_2);
+
+        m_FolderTable = new QListView(FileFilter);
+        m_FolderTable->setObjectName(QString::fromUtf8("m_FolderTable"));
+
+        verticalLayout_3->addWidget(m_FolderTable);
+
+        HipsStackWindow->addWidget(FileFilter);
+        NetFilter = new QWidget();
+        NetFilter->setObjectName(QString::fromUtf8("NetFilter"));
+        HipsStackWindow->addWidget(NetFilter);
+
+        horizontalLayout_3->addWidget(HipsStackWindow);
+
+        MainStackWidget->addWidget(FilterWidget);
+        test1 = new QWidget();
+        test1->setObjectName(QString::fromUtf8("test1"));
+        label_2 = new QLabel(test1);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(150, 220, 72, 15));
+        MainStackWidget->addWidget(test1);
+        test2 = new QWidget();
+        test2->setObjectName(QString::fromUtf8("test2"));
+        label_3 = new QLabel(test2);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setGeometry(QRect(280, 270, 72, 15));
+        MainStackWidget->addWidget(test2);
+
+        verticalLayout->addWidget(MainStackWidget);
 
         maintestClass->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(maintestClass);
@@ -163,6 +265,9 @@ public:
         maintestClass->setStatusBar(statusBar);
 
         retranslateUi(maintestClass);
+
+        HipsStackWindow->setCurrentIndex(0);
+
 
         QMetaObject::connectSlotsByName(maintestClass);
     } // setupUi
@@ -177,6 +282,15 @@ public:
         m_btnhips->setText(QCoreApplication::translate("maintestClass", "\344\270\273\345\212\250\351\230\262\345\276\241", nullptr));
         m_btntest1->setText(QCoreApplication::translate("maintestClass", "\346\265\213\350\257\2251", nullptr));
         m_btntest2->setText(QCoreApplication::translate("maintestClass", "\346\265\213\350\257\2252", nullptr));
+        groupBox->setTitle(QCoreApplication::translate("maintestClass", "\345\212\237\350\203\275\345\214\272", nullptr));
+        m_btnFileFilter->setText(QCoreApplication::translate("maintestClass", "FileFilter", nullptr));
+        m_btnNetFilter->setText(QCoreApplication::translate("maintestClass", "NetFilter", nullptr));
+        m_btnStartFileFilter->setText(QCoreApplication::translate("maintestClass", "StartFileFilter", nullptr));
+        m_AddFolderPath->setText(QCoreApplication::translate("maintestClass", "AddFolderPath", nullptr));
+        m_btnRemoveFolderPath->setText(QCoreApplication::translate("maintestClass", "RemoveFolderPath", nullptr));
+        m_btnStopFileFilter->setText(QCoreApplication::translate("maintestClass", "StopFileFilter", nullptr));
+        label_2->setText(QCoreApplication::translate("maintestClass", "\351\241\265\351\235\2422", nullptr));
+        label_3->setText(QCoreApplication::translate("maintestClass", "\351\241\265\351\235\2423 ", nullptr));
     } // retranslateUi
 
 };

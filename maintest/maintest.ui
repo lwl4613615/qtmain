@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>703</width>
+    <width>711</width>
     <height>543</height>
    </rect>
   </property>
@@ -188,10 +188,122 @@ background: transparent;</string>
      </widget>
     </item>
     <item>
-     <widget class="QStackedWidget" name="stackedWidget">
-      <widget class="QWidget" name="page"/>
-      <widget class="QWidget" name="page_2"/>
-      <widget class="QWidget" name="page_3"/>
+     <widget class="QStackedWidget" name="MainStackWidget">
+      <widget class="QWidget" name="FilterWidget">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="styleSheet">
+           <string notr="true">color:rgb(248, 220, 255)</string>
+          </property>
+          <property name="title">
+           <string>功能区</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QPushButton" name="m_btnFileFilter">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>FileFilter</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="m_btnNetFilter">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>NetFilter</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QStackedWidget" name="HipsStackWindow">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="FileFilter">
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QWidget" name="widget_2" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <item>
+                <widget class="QPushButton" name="m_btnStartFileFilter">
+                 <property name="text">
+                  <string>StartFileFilter</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="m_AddFolderPath">
+                 <property name="text">
+                  <string>AddFolderPath</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="m_btnRemoveFolderPath">
+                 <property name="text">
+                  <string>RemoveFolderPath</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="m_btnStopFileFilter">
+                 <property name="text">
+                  <string>StopFileFilter</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListView" name="m_FolderTable"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="NetFilter"/>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="test1">
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>220</y>
+          <width>72</width>
+          <height>15</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>页面2</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="test2">
+       <widget class="QLabel" name="label_3">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>270</y>
+          <width>72</width>
+          <height>15</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>页面3 </string>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </item>
    </layout>
