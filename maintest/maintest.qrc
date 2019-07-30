@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/SysButtons">
+        <file alias="close">Resources/images/SysButtons/close.png</file>
+        <file alias="close_hover">Resources/images/SysButtons/close_hover.png</file>
+        <file alias="close_pressed">Resources/images/SysButtons/close_pressed.png</file>
+        <file alias="menu">Resources/images/SysButtons/menu.png</file>
+        <file alias="menu_hover">Resources/images/SysButtons/menu_hover.png</file>
+        <file alias="menu_pressed">Resources/images/SysButtons/menu_pressed.png</file>
+        <file alias="min">Resources/images/SysButtons/min.png</file>
+        <file alias="min_hover">Resources/images/SysButtons/min_hover.png</file>
+        <file alias="min_pressed">Resources/images/SysButtons/min_pressed.png</file>
+    </qresource>
+    <qresource prefix="/ToolButtons">
+        <file alias="test1">Resources/images/ToolButtons/gongNeng.png</file>
+        <file alias="test3">Resources/images/ToolButtons/jiaSu.png</file>
+        <file alias="test2">Resources/images/ToolButtons/louDong.png</file>
+        <file>Resources/images/ToolButtons/muMa.png</file>
+        <file>Resources/images/ToolButtons/ruanJian.png</file>
+        <file alias="hips">Resources/images/ToolButtons/tiJian.png</file>
+        <file>Resources/images/ToolButtons/xiTong.png</file>
+    </qresource>
+</RCC>
