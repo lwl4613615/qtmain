@@ -124,6 +124,7 @@
   <ItemGroup>
     <ClCompile Include="CustomPushButton.cpp" />
     <ClCompile Include="DriverTool\Driver.cpp" />
+    <ClCompile Include="FileFilterThread.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maintest.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -135,6 +136,11 @@
     <QtMoc Include="maintest.h" />
     <ClInclude Include="CustomPushButton.h" />
     <ClInclude Include="DriverTool\Driver.h" />
+    <QtMoc Include="FileFilterThread.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
+    </QtMoc>
+    <ClInclude Include="scanuser.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
