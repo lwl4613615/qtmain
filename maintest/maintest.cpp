@@ -45,6 +45,19 @@ maintest::maintest(QWidget *parent)
 	//开启文件过滤和关闭文件过滤
 	connect(ui.m_btnStartFileFilter, &QPushButton::clicked, this, &maintest::StartFileFilterButtonClick);
 	connect(ui.m_btnStopFileFilter, &QPushButton::clicked, this, &maintest::StopFileFilterButtonClick);
+    //工具栏的事件绑定
+    connect(ui.m_btnClose, &QPushButton::clicked, this, [=]() {
+        this->close();
+        });
+    connect(ui.m_btnMin, &QPushButton::clicked, this, [=]
+        {
+            this->showMinimized();
+        });
+    connect(ui.m_btnMenu, &QPushButton::clicked, this, [=] {\
+        QMessageBox::about(NULL, QString::fromLocal8Bit("菜单点击"), QString::fromLocal8Bit("尽情期待哦！"));
+        });
+
+
 }
 
 void maintest::paintEvent(QPaintEvent* event)
