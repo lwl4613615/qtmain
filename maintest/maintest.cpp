@@ -100,3 +100,30 @@ void maintest::StopFileFilterButtonClick()
 		QMessageBox::about(NULL, QString::fromLocal8Bit("关闭"), QString::fromLocal8Bit("驱动关闭成功"));;
 	}
 }
+void maintest::mousePressEvent(QMouseEvent* e)
+{
+    if (e->pos().rx() > 1000 || e->pos().ry() > 500)
+        return;
+    last = e->globalPos();
+}
+
+//鼠标移动
+void maintest::mouseMoveEvent(QMouseEvent* e)
+{
+    if (e->pos().rx() > 1000 || e->pos().ry() > 500)
+        return;
+    int dx = e->globalX() - last.x();
+    int dy = e->globalY() - last.y();
+    last = e->globalPos();
+    move(x() + dx, y() + dy);
+}
+
+//鼠标释放
+void maintest::mouseReleaseEvent(QMouseEvent* e)
+{
+    if (e->pos().rx() > 1000 || e->pos().ry() > 500)
+        return;
+    int dx = e->globalX() - last.x();
+    int dy = e->globalY() - last.y();
+    move(x() + dx, y() + dy);
+}

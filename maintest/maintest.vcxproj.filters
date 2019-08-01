@@ -45,6 +45,9 @@
     <ClCompile Include="DriverTool\Driver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileFilterThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -56,9 +59,15 @@
     <ClInclude Include="DriverTool\Driver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="scanuser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="maintest.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="FileFilterThread.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
