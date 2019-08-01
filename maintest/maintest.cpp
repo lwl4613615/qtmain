@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "maintest.h"
-
+#include"FileFilterThread.h"
 maintest::maintest(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -86,6 +86,11 @@ void maintest::StartFileFilterButtonClick()
 		if (m_cDrvTool.StartDriver(strDrvName.c_str()))
 		{
 			QMessageBox::about(NULL, QString::fromLocal8Bit("开启"), QString::fromLocal8Bit("驱动加载成功"));
+			QThread* a = new QThread();
+			FileFilterThread *obj=new FileFilterThread();
+			obj->moveToThread(a);
+			connect(a, &QThread::started, obj, &FileFilterThread::StartFilter);
+			a->start();
 		}
 	}
 	return;
