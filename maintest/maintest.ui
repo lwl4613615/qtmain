@@ -241,7 +241,7 @@ background: transparent;</string>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="m_AddFolderPath">
+                <widget class="QPushButton" name="m_btnAddFolderPath">
                  <property name="text">
                   <string>AddFolderPath</string>
                  </property>

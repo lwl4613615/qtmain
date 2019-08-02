@@ -62,6 +62,9 @@
     <ClInclude Include="scanuser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sendStruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="maintest.h">

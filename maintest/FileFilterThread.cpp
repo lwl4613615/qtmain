@@ -17,7 +17,7 @@
 #define SCANNER_DEFAULT_REQUEST_COUNT       5
 #define SCANNER_DEFAULT_THREAD_COUNT        2
 #define SCANNER_MAX_THREAD_COUNT            64
-
+CRITICAL_SECTION cr;
 UCHAR FoulString[] = "foul";
 
 //
@@ -31,7 +31,7 @@ typedef struct _SCANNER_THREAD_CONTEXT {
 
 } SCANNER_THREAD_CONTEXT, * PSCANNER_THREAD_CONTEXT;
 
-
+SCANNER_THREAD_CONTEXT context;
 VOID
 Usage(
 	VOID
@@ -140,7 +140,7 @@ Return Value
 	char tmp[256];
 #pragma warning(push)
 #pragma warning(disable:4127) // conditional expression is constant
-
+	EnterCriticalSection(&cr);
 	while (TRUE) {
 
 #pragma warning(pop)
@@ -283,7 +283,7 @@ Return Value
 	}
 
 	free(message);
-
+	LeaveCriticalSection(&cr);
 	return hr;
 }
 void FileFilterThread::StartFilter()
@@ -291,7 +291,7 @@ void FileFilterThread::StartFilter()
 	DWORD requestCount = SCANNER_DEFAULT_REQUEST_COUNT;
 	DWORD threadCount = SCANNER_DEFAULT_THREAD_COUNT;
 	HANDLE threads[SCANNER_MAX_THREAD_COUNT];
-	SCANNER_THREAD_CONTEXT context;
+	
 	HANDLE port, completion;
 	PSCANNER_MESSAGE msg;
 	DWORD threadId;
@@ -405,4 +405,16 @@ main_cleanup:
 	CloseHandle(completion);
 
 
+}
+
+void FileFilterThread::SendRule(SCANNER_RECV obj)
+{
+	DWORD bytesReturned = 0;
+	HRESULT hResult = NULL;
+	hResult = FilterSendMessage(context.Port, &obj, sizeof(SCANNER_RECV), NULL, NULL, &bytesReturned);
+
+	if (hResult != S_OK)
+	{
+		qDebug() << "Send failed";
+	}
 }

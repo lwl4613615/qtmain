@@ -1,5 +1,6 @@
 #pragma once
 #include <QObject>
+#include "sendStruct.h"
 class FileFilterThread :
 	public QObject
 {
@@ -8,6 +9,6 @@ public slots:
 
 	void StartFilter();
 
-
+	void SendRule(SCANNER_RECV obj);
 };
 

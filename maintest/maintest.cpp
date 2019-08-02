@@ -56,7 +56,8 @@ maintest::maintest(QWidget *parent)
     connect(ui.m_btnMenu, &QPushButton::clicked, this, [=] {\
         QMessageBox::about(NULL, QString::fromLocal8Bit("菜单点击"), QString::fromLocal8Bit("尽情期待哦！"));
         });
-
+	//下发文件过滤规则
+	connect(ui.m_btnAddFolderPath, &QPushButton::clicked, this, &maintest::AddFilterButtuonClick);
 
 }
 
@@ -90,6 +91,7 @@ void maintest::StartFileFilterButtonClick()
 			FileFilterThread *obj=new FileFilterThread();
 			obj->moveToThread(a);
 			connect(a, &QThread::started, obj, &FileFilterThread::StartFilter);
+			connect(this, &maintest::sendfilter, obj, &FileFilterThread::SendRule);
 			a->start();
 		}
 	}
@@ -104,4 +106,22 @@ void maintest::StopFileFilterButtonClick()
 	{
 		QMessageBox::about(NULL, QString::fromLocal8Bit("关闭"), QString::fromLocal8Bit("驱动关闭成功"));;
 	}
+}
+
+void maintest::AddFilterButtuonClick()
+{
+	DWORD bytesReturned = 0;
+	DWORD hResult = 0;
+	SCANNER_RECV message = {};
+	QString file_path = QFileDialog::getExistingDirectory(this, "请选择文件路径...", "./");
+	if (!file_path.isEmpty())
+	{
+		wchar_t* Path = (wchar_t *)(file_path.utf16());
+		wcscpy_s(message.path,260, Path);
+		message.ul_PathLength = file_path.length();
+		emit sendfilter(message);
+	}
+	
+	
+	
 }
