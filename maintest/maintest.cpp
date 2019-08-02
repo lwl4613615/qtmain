@@ -119,10 +119,12 @@ void maintest::AddFileFilterPathButtonClick()
 	if (!file_path.isEmpty())
 	{
 		file_path.replace("/", "\\");
-		auto pos =file_path.indexOf("\\");
-
+		
+		wchar_t m[260];
+		QueryDosDevice((LPCWSTR)(file_path.left(2).utf16()), m, 260);
+		file_path.replace(0, 2, QString::fromWCharArray(m));
+		file_path += "\\*";
 		wchar_t* Path = (wchar_t*)(file_path.utf16());
-
 		wcscpy_s(message.path, 260, Path);
 		message.ul_PathLength = file_path.length();
 		hResult = FilterSendMessage(obj->RetPort(), &message, sizeof(message), NULL, NULL, &bytesReturned);
