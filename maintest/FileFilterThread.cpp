@@ -24,12 +24,7 @@ UCHAR FoulString[] = "foul";
 //  Context passed to worker threads
 //
 
-typedef struct _SCANNER_THREAD_CONTEXT {
 
-	HANDLE Port;
-	HANDLE Completion;
-
-} SCANNER_THREAD_CONTEXT, * PSCANNER_THREAD_CONTEXT;
 
 
 VOID
@@ -291,7 +286,7 @@ void FileFilterThread::StartFilter()
 	DWORD requestCount = SCANNER_DEFAULT_REQUEST_COUNT;
 	DWORD threadCount = SCANNER_DEFAULT_THREAD_COUNT;
 	HANDLE threads[SCANNER_MAX_THREAD_COUNT];
-	SCANNER_THREAD_CONTEXT context;
+	
 	HANDLE port, completion;
 	PSCANNER_MESSAGE msg;
 	DWORD threadId;
@@ -405,4 +400,9 @@ main_cleanup:
 	CloseHandle(completion);
 
 
+}
+
+HANDLE FileFilterThread::RetPort()
+{
+	return context.Port;
 }

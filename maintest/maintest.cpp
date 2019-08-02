@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "maintest.h"
-#include"FileFilterThread.h"
+#include <fltuser.h>
+#include "Header.h"
 maintest::maintest(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -45,6 +46,9 @@ maintest::maintest(QWidget *parent)
 	//开启文件过滤和关闭文件过滤
 	connect(ui.m_btnStartFileFilter, &QPushButton::clicked, this, &maintest::StartFileFilterButtonClick);
 	connect(ui.m_btnStopFileFilter, &QPushButton::clicked, this, &maintest::StopFileFilterButtonClick);
+	connect(ui.m_btnAddFolderPath, &QPushButton::clicked, this, &maintest::AddFileFilterPathButtonClick);
+
+	
     //工具栏的事件绑定
     connect(ui.m_btnClose, &QPushButton::clicked, this, [=]() {
         this->close();
@@ -86,11 +90,11 @@ void maintest::StartFileFilterButtonClick()
 		if (m_cDrvTool.StartDriver(strDrvName.c_str()))
 		{
 			QMessageBox::about(NULL, QString::fromLocal8Bit("开启"), QString::fromLocal8Bit("驱动加载成功"));
-			QThread* a = new QThread();
-			FileFilterThread *obj=new FileFilterThread();
-			obj->moveToThread(a);
-			connect(a, &QThread::started, obj, &FileFilterThread::StartFilter);
-			a->start();
+			filterThread = new QThread();
+			obj=new FileFilterThread();
+			obj->moveToThread(filterThread);
+			connect(filterThread, &QThread::started, obj, &FileFilterThread::StartFilter);
+			filterThread->start();
 		}
 	}
 	return;
@@ -105,6 +109,28 @@ void maintest::StopFileFilterButtonClick()
 		QMessageBox::about(NULL, QString::fromLocal8Bit("关闭"), QString::fromLocal8Bit("驱动关闭成功"));;
 	}
 }
+
+void maintest::AddFileFilterPathButtonClick()
+{
+	DWORD bytesReturned = 0;
+	DWORD hResult = 0;
+	SCANNER_RECV message = {};
+	QString file_path = QFileDialog::getExistingDirectory(this, "请选择文件路径...", "./");
+	if (!file_path.isEmpty())
+	{
+		file_path.replace("/", "\\");
+		auto pos =file_path.indexOf("\\");
+
+		wchar_t* Path = (wchar_t*)(file_path.utf16());
+
+		wcscpy_s(message.path, 260, Path);
+		message.ul_PathLength = file_path.length();
+		hResult = FilterSendMessage(obj->RetPort(), &message, sizeof(message), NULL, NULL, &bytesReturned);
+
+	}
+	return;
+}
+
 void maintest::mousePressEvent(QMouseEvent* e)
 {
     if (e->pos().rx() > 1000 || e->pos().ry() > 500)

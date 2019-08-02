@@ -58,7 +58,7 @@ public:
     QWidget *widget_2;
     QHBoxLayout *horizontalLayout_4;
     QPushButton *m_btnStartFileFilter;
-    QPushButton *m_AddFolderPath;
+    QPushButton *m_btnAddFolderPath;
     QPushButton *m_btnRemoveFolderPath;
     QPushButton *m_btnStopFileFilter;
     QListView *m_FolderTable;
@@ -212,10 +212,10 @@ public:
 
         horizontalLayout_4->addWidget(m_btnStartFileFilter);
 
-        m_AddFolderPath = new QPushButton(widget_2);
-        m_AddFolderPath->setObjectName(QString::fromUtf8("m_AddFolderPath"));
+        m_btnAddFolderPath = new QPushButton(widget_2);
+        m_btnAddFolderPath->setObjectName(QString::fromUtf8("m_btnAddFolderPath"));
 
-        horizontalLayout_4->addWidget(m_AddFolderPath);
+        horizontalLayout_4->addWidget(m_btnAddFolderPath);
 
         m_btnRemoveFolderPath = new QPushButton(widget_2);
         m_btnRemoveFolderPath->setObjectName(QString::fromUtf8("m_btnRemoveFolderPath"));
@@ -286,7 +286,7 @@ public:
         m_btnFileFilter->setText(QCoreApplication::translate("maintestClass", "FileFilter", nullptr));
         m_btnNetFilter->setText(QCoreApplication::translate("maintestClass", "NetFilter", nullptr));
         m_btnStartFileFilter->setText(QCoreApplication::translate("maintestClass", "StartFileFilter", nullptr));
-        m_AddFolderPath->setText(QCoreApplication::translate("maintestClass", "AddFolderPath", nullptr));
+        m_btnAddFolderPath->setText(QCoreApplication::translate("maintestClass", "AddFolderPath", nullptr));
         m_btnRemoveFolderPath->setText(QCoreApplication::translate("maintestClass", "RemoveFolderPath", nullptr));
         m_btnStopFileFilter->setText(QCoreApplication::translate("maintestClass", "StopFileFilter", nullptr));
         label_2->setText(QCoreApplication::translate("maintestClass", "\351\241\265\351\235\2422", nullptr));

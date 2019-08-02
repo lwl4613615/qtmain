@@ -3,6 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_maintest.h"
 #include "..\\DriverTool\\Driver.h"
+#include"FileFilterThread.h"
 class maintest : public QMainWindow
 {
 	Q_OBJECT
@@ -23,7 +24,10 @@ private:
 private  slots:
 	void StartFileFilterButtonClick();
 	void StopFileFilterButtonClick();
+	void AddFileFilterPathButtonClick();
 private:
 	Driver m_cDrvTool;
+	QThread* filterThread;
+	FileFilterThread* obj;
     QPoint last;
 };
