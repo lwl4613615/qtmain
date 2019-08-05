@@ -162,7 +162,7 @@ void maintest::RemoveFileFilterPathButtonClick()
     wcscpy_s(message.path, 260, Path);
     message.ul_PathLength = temp.length();
     hResult = FilterSendMessage(obj->RetPort(), &message, sizeof(message), NULL, NULL, &bytesReturned);
-    OutputDebugStringW(message.path);
+
     delete item;        //释放指针所指向的列表项
 }
 
