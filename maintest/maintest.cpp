@@ -47,7 +47,7 @@ maintest::maintest(QWidget *parent)
 	connect(ui.m_btnStartFileFilter, &QPushButton::clicked, this, &maintest::StartFileFilterButtonClick);
 	connect(ui.m_btnStopFileFilter, &QPushButton::clicked, this, &maintest::StopFileFilterButtonClick);
 	connect(ui.m_btnAddFolderPath, &QPushButton::clicked, this, &maintest::AddFileFilterPathButtonClick);
-
+    connect(ui.m_btnRemoveFolderPath, &QPushButton::clicked, this, &maintest::RemoveFileFilterPathButtonClick);
 	
     //工具栏的事件绑定
     connect(ui.m_btnClose, &QPushButton::clicked, this, [=]() {
@@ -118,6 +118,10 @@ void maintest::AddFileFilterPathButtonClick()
 	QString file_path = QFileDialog::getExistingDirectory(this, "请选择文件路径...", "./");
 	if (!file_path.isEmpty())
 	{
+       
+        QListWidgetItem* item = new QListWidgetItem;
+        item->setText(file_path);                     //设置列表项的文本
+        ui.MyFilterPathList->addItem(item);          //加载列表项到列表框          
 		file_path.replace("/", "\\");
 		message.option = 1;
 		wchar_t m[260];
@@ -131,6 +135,35 @@ void maintest::AddFileFilterPathButtonClick()
 
 	}
 	return;
+}
+
+void maintest::RemoveFileFilterPathButtonClick()
+{
+    DWORD bytesReturned = 0;
+    DWORD hResult = 0;
+    //定义消息结构
+    SCANNER_RECV message = {0};
+    //表明是进行移除列表的操作
+    message.option = 2;    
+    //开始构造字符串
+
+    QListWidgetItem* item = ui.MyFilterPathList->takeItem(ui.MyFilterPathList->currentRow());
+    if (item==nullptr)
+    {
+        return;
+    }
+    QString temp= item->text();
+    temp.replace("/", "\\");
+    wchar_t m[260];
+    QueryDosDevice((LPCWSTR)(temp.left(2).utf16()), m, 260);
+    temp.replace(0, 2, QString::fromWCharArray(m));
+    temp += "\\*.*";
+    wchar_t* Path = (wchar_t*)(temp.utf16());
+    wcscpy_s(message.path, 260, Path);
+    message.ul_PathLength = temp.length();
+    hResult = FilterSendMessage(obj->RetPort(), &message, sizeof(message), NULL, NULL, &bytesReturned);
+    OutputDebugStringW(message.path);
+    delete item;        //释放指针所指向的列表项
 }
 
 void maintest::mousePressEvent(QMouseEvent* e)

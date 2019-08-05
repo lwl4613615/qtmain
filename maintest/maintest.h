@@ -25,6 +25,7 @@ private  slots:
 	void StartFileFilterButtonClick();
 	void StopFileFilterButtonClick();
 	void AddFileFilterPathButtonClick();
+    void RemoveFileFilterPathButtonClick();
 private:
 	Driver m_cDrvTool;
 	QThread* filterThread;

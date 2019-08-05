@@ -16,7 +16,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QListView>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
@@ -61,7 +61,7 @@ public:
     QPushButton *m_btnAddFolderPath;
     QPushButton *m_btnRemoveFolderPath;
     QPushButton *m_btnStopFileFilter;
-    QListView *m_FolderTable;
+    QListWidget *MyFilterPathList;
     QWidget *NetFilter;
     QWidget *test1;
     QLabel *label_2;
@@ -230,10 +230,10 @@ public:
 
         verticalLayout_3->addWidget(widget_2);
 
-        m_FolderTable = new QListView(FileFilter);
-        m_FolderTable->setObjectName(QString::fromUtf8("m_FolderTable"));
+        MyFilterPathList = new QListWidget(FileFilter);
+        MyFilterPathList->setObjectName(QString::fromUtf8("MyFilterPathList"));
 
-        verticalLayout_3->addWidget(m_FolderTable);
+        verticalLayout_3->addWidget(MyFilterPathList);
 
         HipsStackWindow->addWidget(FileFilter);
         NetFilter = new QWidget();
