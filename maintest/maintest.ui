@@ -265,7 +265,7 @@ background: transparent;</string>
              </widget>
             </item>
             <item>
-             <widget class="QListView" name="m_FolderTable"/>
+             <widget class="QListWidget" name="MyFilterPathList"/>
             </item>
            </layout>
           </widget>
