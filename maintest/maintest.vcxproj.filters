@@ -48,6 +48,9 @@
     <ClCompile Include="FileFilterThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PopWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -73,9 +76,15 @@
     <QtMoc Include="FileFilterThread.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="PopWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="maintest.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="popupwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

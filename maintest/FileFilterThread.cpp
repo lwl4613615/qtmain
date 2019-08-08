@@ -13,6 +13,7 @@
 #include <dontuse.h>
 #include <conio.h>
 #include <fltuser.h>
+
 #pragma comment(lib,"fltLib.lib")
 #define SCANNER_DEFAULT_REQUEST_COUNT       5
 #define SCANNER_DEFAULT_THREAD_COUNT        2
@@ -25,8 +26,54 @@ UCHAR FoulString[] = "foul";
 //
 
 
+class CMyCriticalSection
+{
+public:
+	CMyCriticalSection()
+	{
+		InitializeCriticalSection(&m_cSection);
+	}
+
+	void Lock()
+	{
+		EnterCriticalSection(&m_cSection);
+	}
+
+	void UnLock()
+	{
+		LeaveCriticalSection(&m_cSection);
+	}
 
 
+	//利用析构函数删除临界区对象
+	virtual ~CMyCriticalSection()
+	{
+		DeleteCriticalSection(&m_cSection);
+	}
+private:
+	CRITICAL_SECTION                        m_cSection;
+};
+
+class CCriticalSectionAutoLock
+{
+public:
+	//利用构造函数上锁，即进去临界区
+	CCriticalSectionAutoLock(CMyCriticalSection* mySection)
+		:pCMySection(mySection)
+	{
+		pCMySection->Lock();
+	}
+
+	//利用析构函数解锁，即离开临界区
+	virtual ~CCriticalSectionAutoLock()
+	{
+		pCMySection->UnLock();
+	}
+private:
+	CMyCriticalSection* pCMySection;
+};
+
+CMyCriticalSection cs = {};
 VOID
 Usage(
 	VOID
@@ -135,7 +182,7 @@ Return Value
 	char tmp[256];
 #pragma warning(push)
 #pragma warning(disable:4127) // conditional expression is constant
-
+	CCriticalSectionAutoLock  cLock(&cs);
 	while (TRUE) {
 
 #pragma warning(pop)
@@ -171,7 +218,7 @@ Return Value
 
 		sprintf_s(tmp, 256, "option: % d\n", notification->Option);
 		OutputDebugStringA(tmp);
-	
+		wchar_t info[1024] = { 0 };
 		switch (notification->Option)
 		{
 		case 0:
@@ -183,34 +230,64 @@ Return Value
 		case 1:
 			//创建文件的时候
 		{
-			sprintf_s(tmp, 256, "r3 CreateProcessPath:%ws \n ", notification->ProcessPath);
-			OutputDebugStringA(tmp);
-			sprintf_s(tmp, 256, "r3 CreateFilePath:%ws \n", notification->FilePath);
-			OutputDebugStringA(tmp);
-			result = false;
+// 			sprintf_s(tmp, 256, "r3 CreateProcessPath:%ws \n ", notification->ProcessPath);
+// 			OutputDebugStringA(tmp);
+// 			sprintf_s(tmp, 256, "r3 CreateFilePath:%ws \n", notification->FilePath);
+// 			OutputDebugStringA(tmp);
+			wsprintf(info, L"ProcessPath:%ws \r\n CreateFilePath:%ws \r\n", notification->ProcessPath, notification->FilePath);
+			if(IDOK==MessageBox(nullptr, info, L"CreateFile", MB_OKCANCEL))
+			{
+				result = false;
+			}
+			else
+			{
+				result = true;
+			}
+			
+			
 			break;
 		}
 		case 2:
 			//重命名文件的时候
 		{
-			sprintf_s(tmp, 256, "r3 RenameProcessPath:%ws \n ", notification->ProcessPath);
-			OutputDebugStringA(tmp);
-			sprintf_s(tmp, 256, "r3 RenameoldFilePath:%ws \n", notification->FilePath);
-			OutputDebugStringA(tmp);
-			sprintf_s(tmp, 256, "r3 RenamenewFilePath:%ws \n", notification->RenamePath);
-			OutputDebugStringA(tmp);
-		
-			result = false;
+// 			sprintf_s(tmp, 256, "r3 RenameProcessPath:%ws \n ", notification->ProcessPath);
+// 			OutputDebugStringA(tmp);
+// 			sprintf_s(tmp, 256, "r3 RenameoldFilePath:%ws \n", notification->FilePath);
+// 			OutputDebugStringA(tmp);
+// 			sprintf_s(tmp, 256, "r3 RenamenewFilePath:%ws \n", notification->RenamePath);
+// 			OutputDebugStringA(tmp);
+// 				wsprintf(info, L"CreateProcessPath:%ws \r\n CreateFilePath:%ws \r\n", notification->ProcessPath, notification->FilePath);
+			wsprintf(info, L"ProcessPath:%ws \r\n CreateFilePath:%ws \r\nRenameFilePath:%ws \r\n", notification->ProcessPath, notification->FilePath,notification->RenamePath);
+			if (IDOK == MessageBox(nullptr, info, L"Rename", MB_OKCANCEL))
+			{
+				result = false;
+			}
+			else
+			{
+				result = true;
+			}
+
+// 			result = false;
+			
 			break;
 		}
 		case 3:
-			//创建文件的时候
+			//删除文件的时候
 		{
-			sprintf_s(tmp, 256, "r3 deleteProcessPath:%ws \n ", notification->ProcessPath);
-			OutputDebugStringA(tmp);
-			sprintf_s(tmp, 256, "r3 deleteFilePath:%ws \n", notification->FilePath);
-			OutputDebugStringA(tmp);		
-			result = false;
+// 			sprintf_s(tmp, 256, "r3 deleteProcessPath:%ws \n ", notification->ProcessPath);
+// 			OutputDebugStringA(tmp);
+// 			sprintf_s(tmp, 256, "r3 deleteFilePath:%ws \n", notification->FilePath);
+// 			OutputDebugStringA(tmp);		
+/*			result = false;*/
+			wsprintf(info, L"ProcessPath:%ws \r\n DeleteFilePath:%ws \r\n", notification->ProcessPath, notification->FilePath);
+			if (IDOK == MessageBox(nullptr, info, L"Delete", MB_OKCANCEL))
+			{
+				result = false;
+			}
+			else
+			{
+				result = true;
+			}
 			break;
 		}
 		default:
@@ -335,7 +412,7 @@ void FileFilterThread::StartFilter()
 	//
 	//  Create specified number of threads.
 	//
-
+	
 	for (i = 0; i < threadCount; i++) {
 
 		threads[i] = CreateThread(NULL,

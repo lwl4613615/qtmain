@@ -2,6 +2,7 @@
 #include "maintest.h"
 #include <fltuser.h>
 #include "Header.h"
+
 maintest::maintest(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -55,7 +56,7 @@ maintest::maintest(QWidget *parent)
         });
     connect(ui.m_btnMin, &QPushButton::clicked, this, [=]
         {
-            this->showMinimized();
+		  this->showMinimized();		
         });
     connect(ui.m_btnMenu, &QPushButton::clicked, this, [=] {\
         QMessageBox::about(NULL, QString::fromLocal8Bit("菜单点击"), QString::fromLocal8Bit("尽情期待哦！"));

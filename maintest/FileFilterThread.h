@@ -15,6 +15,7 @@ public slots:
 	void StartFilter();
 public:
 	HANDLE RetPort();
+
 private:
 	SCANNER_THREAD_CONTEXT context;
 
