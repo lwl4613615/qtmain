@@ -53,7 +53,7 @@ public:
     {
         if (mypop->objectName().isEmpty())
             mypop->setObjectName(QString::fromUtf8("mypop"));
-        mypop->resize(398, 342);
+        mypop->resize(398, 362);
         verticalLayout = new QVBoxLayout(mypop);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         horizontalLayout = new QHBoxLayout();

@@ -63,6 +63,14 @@ public:
     QPushButton *m_btnStopFileFilter;
     QListWidget *MyFilterPathList;
     QWidget *NetFilter;
+    QVBoxLayout *verticalLayout_4;
+    QWidget *widget_3;
+    QHBoxLayout *horizontalLayout_5;
+    QPushButton *btn_StartNetFilter;
+    QPushButton *btn_AddNetFilterPath;
+    QPushButton *btn_RemoveNetFilterPath;
+    QPushButton *btn_StopNetFilter;
+    QListWidget *MyNetFilterPath;
     QWidget *test1;
     QLabel *label_2;
     QWidget *test2;
@@ -238,6 +246,44 @@ public:
         HipsStackWindow->addWidget(FileFilter);
         NetFilter = new QWidget();
         NetFilter->setObjectName(QString::fromUtf8("NetFilter"));
+        verticalLayout_4 = new QVBoxLayout(NetFilter);
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        widget_3 = new QWidget(NetFilter);
+        widget_3->setObjectName(QString::fromUtf8("widget_3"));
+        horizontalLayout_5 = new QHBoxLayout(widget_3);
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
+        btn_StartNetFilter = new QPushButton(widget_3);
+        btn_StartNetFilter->setObjectName(QString::fromUtf8("btn_StartNetFilter"));
+
+        horizontalLayout_5->addWidget(btn_StartNetFilter);
+
+        btn_AddNetFilterPath = new QPushButton(widget_3);
+        btn_AddNetFilterPath->setObjectName(QString::fromUtf8("btn_AddNetFilterPath"));
+
+        horizontalLayout_5->addWidget(btn_AddNetFilterPath);
+
+        btn_RemoveNetFilterPath = new QPushButton(widget_3);
+        btn_RemoveNetFilterPath->setObjectName(QString::fromUtf8("btn_RemoveNetFilterPath"));
+
+        horizontalLayout_5->addWidget(btn_RemoveNetFilterPath);
+
+        btn_StopNetFilter = new QPushButton(widget_3);
+        btn_StopNetFilter->setObjectName(QString::fromUtf8("btn_StopNetFilter"));
+
+        horizontalLayout_5->addWidget(btn_StopNetFilter);
+
+
+        verticalLayout_4->addWidget(widget_3);
+
+        MyNetFilterPath = new QListWidget(NetFilter);
+        MyNetFilterPath->setObjectName(QString::fromUtf8("MyNetFilterPath"));
+
+        verticalLayout_4->addWidget(MyNetFilterPath);
+
         HipsStackWindow->addWidget(NetFilter);
 
         horizontalLayout_3->addWidget(HipsStackWindow);
@@ -266,7 +312,7 @@ public:
 
         retranslateUi(maintestClass);
 
-        HipsStackWindow->setCurrentIndex(0);
+        HipsStackWindow->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(maintestClass);
@@ -289,6 +335,10 @@ public:
         m_btnAddFolderPath->setText(QCoreApplication::translate("maintestClass", "AddFolderPath", nullptr));
         m_btnRemoveFolderPath->setText(QCoreApplication::translate("maintestClass", "RemoveFolderPath", nullptr));
         m_btnStopFileFilter->setText(QCoreApplication::translate("maintestClass", "StopFileFilter", nullptr));
+        btn_StartNetFilter->setText(QCoreApplication::translate("maintestClass", "StartNetFilter", nullptr));
+        btn_AddNetFilterPath->setText(QCoreApplication::translate("maintestClass", "AddDeterApplication", nullptr));
+        btn_RemoveNetFilterPath->setText(QCoreApplication::translate("maintestClass", "RemoveDeterApplication", nullptr));
+        btn_StopNetFilter->setText(QCoreApplication::translate("maintestClass", "StopNetFilter", nullptr));
         label_2->setText(QCoreApplication::translate("maintestClass", "\351\241\265\351\235\2422", nullptr));
         label_3->setText(QCoreApplication::translate("maintestClass", "\351\241\265\351\235\2423 ", nullptr));
     } // retranslateUi

@@ -2,7 +2,7 @@
 #include "maintest.h"
 #include <fltuser.h>
 #include "Header.h"
-
+#include "ioctl.h"
 maintest::maintest(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -49,7 +49,11 @@ maintest::maintest(QWidget *parent)
 	connect(ui.m_btnStopFileFilter, &QPushButton::clicked, this, &maintest::StopFileFilterButtonClick);
 	connect(ui.m_btnAddFolderPath, &QPushButton::clicked, this, &maintest::AddFileFilterPathButtonClick);
     connect(ui.m_btnRemoveFolderPath, &QPushButton::clicked, this, &maintest::RemoveFileFilterPathButtonClick);
-	
+	//开启网络过滤和关闭网络过滤
+	connect(ui.btn_StartNetFilter, &QPushButton::clicked, this, &maintest::StartNetFilterButtonClick);
+	connect(ui.btn_StopNetFilter, &QPushButton::clicked, this, &maintest::StopNetFilterButtonClick);
+	connect(ui.btn_AddNetFilterPath, &QPushButton::clicked, this, &maintest::AddDeterAppcationButtonClick);
+	connect(ui.btn_RemoveNetFilterPath, &QPushButton::clicked, this, &maintest::RemoveDeterAppcationButtonClick);
     //工具栏的事件绑定
     connect(ui.m_btnClose, &QPushButton::clicked, this, [=]() {
         this->close();
@@ -165,6 +169,86 @@ void maintest::RemoveFileFilterPathButtonClick()
     hResult = FilterSendMessage(obj->RetPort(), &message, sizeof(message), NULL, NULL, &bytesReturned);
 
     delete item;        //释放指针所指向的列表项
+}
+
+void maintest::StartNetFilterButtonClick()
+{
+	qDebug() << "Click NetFilterButton!";
+	QString SysFilePath = QFileDialog::getOpenFileName(NULL,
+		tr("Open Sys File"),
+		QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),//"C:\\",指定路径为当前桌面路径
+		tr("Driver File(*.sys)"));
+	QFileInfo fileinfo(SysFilePath);
+	std::string strFilePath = SysFilePath.toStdString();
+	std::string strDrvName = fileinfo.baseName().toStdString();
+	m_cDrvTool1.DeleteDriver(strDrvName.c_str());
+	if (m_cDrvTool1.InstallDriver(strDrvName.c_str(), strFilePath.c_str(), nullptr))
+	{
+		if (m_cDrvTool1.StartDriver(strDrvName.c_str()))
+		{
+			// 开始创建通讯	
+			PortToNet = CreateFileW(L"\\\\.\\WFP_TEST", GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+			if (PortToNet == INVALID_HANDLE_VALUE)
+			{
+				QMessageBox::about(NULL, QString::fromLocal8Bit("开启失败!"), QString::fromLocal8Bit("句柄打开失败!"));
+				return;
+			}
+			QMessageBox::about(NULL, QString::fromLocal8Bit("开启"), QString::fromLocal8Bit("驱动加载成功"));
+			
+		}
+	}
+}
+
+void maintest::StopNetFilterButtonClick()
+{
+	m_cDrvTool1.StopDriver(m_cDrvTool1.GetDriverName());
+	if (m_cDrvTool.DeleteDriver(m_cDrvTool1.GetDriverName()))
+	{
+		CloseHandle(PortToNet);
+		QMessageBox::about(NULL, QString::fromLocal8Bit("关闭"), QString::fromLocal8Bit("驱动关闭成功"));;
+	}
+}
+
+void maintest::AddDeterAppcationButtonClick()
+{
+	QString FilePath = QFileDialog::getOpenFileName(NULL,
+		tr("Open Application File"),
+		QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),//"C:\\",指定路径为当前桌面路径
+		tr("Application File(*.exe)"));
+	if (!FilePath.isEmpty())
+	{
+		QListWidgetItem* item = new QListWidgetItem;
+		item->setText(FilePath);                     //设置列表项的文本
+		ui.MyNetFilterPath->addItem(item);          //加载列表项到列表框     
+		QString temp = item->text();
+		temp.replace("/", "\\");
+		wchar_t m[260];
+		QueryDosDevice(reinterpret_cast<const wchar_t*>(temp.left(2).utf16()), m, 260);
+		temp.replace(0, 2, QString::fromWCharArray(m));
+		const wchar_t* p = (const wchar_t*)temp.utf16();
+		DWORD dwrite=0;
+		DeviceIoControl(PortToNet, IOCTL_ADD_PATH, (LPVOID)p, (temp.length()+1)*2, NULL, NULL, &dwrite, NULL);
+
+	}
+	//DeviceIoControl(PortToNet, IOCTL_ADD_PATH, &ch, 16, &ch, 4, &dwrite, NULL)
+}
+
+void maintest::RemoveDeterAppcationButtonClick()
+{
+	QListWidgetItem* item = ui.MyNetFilterPath->takeItem(ui.MyNetFilterPath->currentRow());
+	if (item == nullptr)
+	{
+		return;
+	}
+	QString temp = item->text();
+	temp.replace("/", "\\");
+	wchar_t m[260];
+	QueryDosDevice((LPCWSTR)(temp.left(2).utf16()), m, 260);
+	temp.replace(0, 2, QString::fromWCharArray(m));
+	const wchar_t* p = (const wchar_t*)temp.utf16();
+	DWORD dwrite = 0;
+	DeviceIoControl(PortToNet, IOCTL_DELETE_PATH, (LPVOID)p, (temp.length() + 1) * 2, NULL, NULL, &dwrite, NULL);
+	delete item;        //释放指针所指向的列表项
 }
 
 void maintest::mousePressEvent(QMouseEvent* e)

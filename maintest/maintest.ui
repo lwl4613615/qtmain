@@ -226,7 +226,7 @@ background: transparent;</string>
         <item>
          <widget class="QStackedWidget" name="HipsStackWindow">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="FileFilter">
            <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -269,7 +269,47 @@ background: transparent;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="NetFilter"/>
+          <widget class="QWidget" name="NetFilter">
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QWidget" name="widget_3" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <item>
+                <widget class="QPushButton" name="btn_StartNetFilter">
+                 <property name="text">
+                  <string>StartNetFilter</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btn_AddNetFilterPath">
+                 <property name="text">
+                  <string>AddDeterApplication</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btn_RemoveNetFilterPath">
+                 <property name="text">
+                  <string>RemoveDeterApplication</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btn_StopNetFilter">
+                 <property name="text">
+                  <string>StopNetFilter</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="MyNetFilterPath"/>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>

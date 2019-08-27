@@ -78,51 +78,53 @@ bool Driver::InstallDriver(const char* lpszDriverName, const char* lpszDriverPat
 	//-------------------------------------------------------------------------------------------------------
 	// SYSTEM\\CurrentControlSet\\Services\\DriverName\\Instances子健下的键值项 
 	//-------------------------------------------------------------------------------------------------------
-	strcpy_s(szTempStr, MAX_PATH,"SYSTEM\\CurrentControlSet\\Services\\");
-	strcat_s(szTempStr, MAX_PATH,lpszDriverName);
-	strcat_s(szTempStr, MAX_PATH,"\\Instances");
-	if (RegCreateKeyExA(HKEY_LOCAL_MACHINE, szTempStr, 0, "", REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hKey, (LPDWORD)&dwData) != ERROR_SUCCESS)
+	if (lpszAltitude!=nullptr)
 	{
-		return FALSE;
-	}
-	// 注册表驱动程序的DefaultInstance 值 
-	strcpy_s(szTempStr, MAX_PATH, lpszDriverName);
-	strcat_s(szTempStr, MAX_PATH," Instance");
-	if (RegSetValueExA(hKey, "DefaultInstance", 0, REG_SZ, (CONST BYTE*)szTempStr, (DWORD)strlen(szTempStr)) != ERROR_SUCCESS)
-	{
-		return FALSE;
-	}
-	RegFlushKey(hKey);//刷新注册表
-	RegCloseKey(hKey);
+		strcpy_s(szTempStr, MAX_PATH, "SYSTEM\\CurrentControlSet\\Services\\");
+		strcat_s(szTempStr, MAX_PATH, lpszDriverName);
+		strcat_s(szTempStr, MAX_PATH, "\\Instances");
+		if (RegCreateKeyExA(HKEY_LOCAL_MACHINE, szTempStr, 0, "", REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hKey, (LPDWORD)& dwData) != ERROR_SUCCESS)
+		{
+			return FALSE;
+		}
+		// 注册表驱动程序的DefaultInstance 值 
+		strcpy_s(szTempStr, MAX_PATH, lpszDriverName);
+		strcat_s(szTempStr, MAX_PATH, " Instance");
+		if (RegSetValueExA(hKey, "DefaultInstance", 0, REG_SZ, (CONST BYTE*)szTempStr, (DWORD)strlen(szTempStr)) != ERROR_SUCCESS)
+		{
+			return FALSE;
+		}
+		RegFlushKey(hKey);//刷新注册表
+		RegCloseKey(hKey);
 
 
-	//-------------------------------------------------------------------------------------------------------
-	// SYSTEM\\CurrentControlSet\\Services\\DriverName\\Instances\\DriverName Instance子健下的键值项 
-	//-------------------------------------------------------------------------------------------------------
-	strcpy_s(szTempStr, MAX_PATH,"SYSTEM\\CurrentControlSet\\Services\\");
-	strcat_s(szTempStr, MAX_PATH,lpszDriverName);
-	strcat_s(szTempStr, MAX_PATH,"\\Instances\\");
-	strcat_s(szTempStr, MAX_PATH,lpszDriverName);
-	strcat_s(szTempStr, MAX_PATH," Instance");
-	if (RegCreateKeyExA(HKEY_LOCAL_MACHINE, szTempStr, 0, "", REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hKey, (LPDWORD)&dwData) != ERROR_SUCCESS)
-	{
-		return FALSE;
-	}
-	// 注册表驱动程序的Altitude 值
-	strcpy_s(szTempStr, MAX_PATH, lpszAltitude);
-	if (RegSetValueExA(hKey, "Altitude", 0, REG_SZ, (CONST BYTE*)szTempStr, (DWORD)strlen(szTempStr)) != ERROR_SUCCESS)
-	{
-		return FALSE;
-	}
-	// 注册表驱动程序的Flags 值
-	dwData = 0x0;
-	if (RegSetValueExA(hKey, "Flags", 0, REG_DWORD, (CONST BYTE*)&dwData, sizeof(DWORD)) != ERROR_SUCCESS)
-	{
-		return FALSE;
-	}
-	RegFlushKey(hKey);//刷新注册表
-	RegCloseKey(hKey);
-
+		//-------------------------------------------------------------------------------------------------------
+		// SYSTEM\\CurrentControlSet\\Services\\DriverName\\Instances\\DriverName Instance子健下的键值项 
+		//-------------------------------------------------------------------------------------------------------
+		strcpy_s(szTempStr, MAX_PATH, "SYSTEM\\CurrentControlSet\\Services\\");
+		strcat_s(szTempStr, MAX_PATH, lpszDriverName);
+		strcat_s(szTempStr, MAX_PATH, "\\Instances\\");
+		strcat_s(szTempStr, MAX_PATH, lpszDriverName);
+		strcat_s(szTempStr, MAX_PATH, " Instance");
+		if (RegCreateKeyExA(HKEY_LOCAL_MACHINE, szTempStr, 0, "", REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hKey, (LPDWORD)& dwData) != ERROR_SUCCESS)
+		{
+			return FALSE;
+		}
+		// 注册表驱动程序的Altitude 值
+		strcpy_s(szTempStr, MAX_PATH, lpszAltitude);
+		if (RegSetValueExA(hKey, "Altitude", 0, REG_SZ, (CONST BYTE*)szTempStr, (DWORD)strlen(szTempStr)) != ERROR_SUCCESS)
+		{
+			return FALSE;
+		}
+		// 注册表驱动程序的Flags 值
+		dwData = 0x0;
+		if (RegSetValueExA(hKey, "Flags", 0, REG_DWORD, (CONST BYTE*) & dwData, sizeof(DWORD)) != ERROR_SUCCESS)
+		{
+			return FALSE;
+		}
+		RegFlushKey(hKey);//刷新注册表
+		RegCloseKey(hKey);
+	}	
 	return TRUE;
 }
 

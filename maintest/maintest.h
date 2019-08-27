@@ -26,9 +26,15 @@ private  slots:
 	void StopFileFilterButtonClick();
 	void AddFileFilterPathButtonClick();
     void RemoveFileFilterPathButtonClick();
+	void StartNetFilterButtonClick();
+	void StopNetFilterButtonClick();
+	void AddDeterAppcationButtonClick();
+	void RemoveDeterAppcationButtonClick();
 private:
 	Driver m_cDrvTool;
+	Driver m_cDrvTool1;
 	QThread* filterThread;
 	FileFilterThread* obj;
     QPoint last;
+	HANDLE PortToNet;
 };
